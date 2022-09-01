@@ -1,0 +1,88 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
+class product_details {
+String name;
+int quantity;
+int price;
+
+    public product_details(String name, int quantity, int price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+}
+public class Main
+{
+	public static void main(String[] args) {
+	int total = 0, discount = 0, delivery_charges = 0, overall_price = 0;
+        List<product_details> products = new ArrayList<product_details>();
+        char c;
+        String offer;
+        float distance;
+        Scanner scan = new Scanner(System.in);
+        do {
+            System.out.println("Enter the product name :");
+
+            String n = scan.next();
+            System.out.println("Enter quantity : ");
+            int quan = scan.nextInt();
+            System.out.println("Enter price per item in paise : ");
+            int price = scan.nextInt();
+            products.add(new product_details(n, quan, price));
+            System.out.println("Do you want to add many details (y or n) : ");
+            c = scan.next().charAt(0);
+            total=quan*price;
+            overall_price+=total;
+        } while (c == 'y' || c == 'Y');
+            System.out.println("Enter the distance in meters: ");
+            distance=scan.nextInt();
+
+        if(0<distance&&distance<=10000){
+            delivery_charges=5000;
+        }
+        else if(10000<distance&&distance<=20000){
+            delivery_charges=10000;
+        }
+        else if(20000<distance&&distance<=50000){
+            delivery_charges=50000;
+        }
+        else if(50000<distance){
+            delivery_charges=100000;
+        }
+        System.out.println("Enter the offer type:");
+        System.out.println("There are two types of discounts FLAT & DELIVERY");
+        System.out.println("FLAT is for the discount on ordered items");
+        System.out.println("DELIVERY is for free delivery");
+        offer=scan.next();
+        if(Objects.equals(offer, "FLAT")){
+            discount=1000;
+        }
+        else if(Objects.equals(offer, "DELIVERY")){
+            discount=delivery_charges;
+            delivery_charges=0;
+        }
+        overall_price=overall_price-discount;
+        overall_price=overall_price+delivery_charges;
+        System.out.println("Discount amount is:"+discount);
+        System.out.println("Delivery fee:"+delivery_charges);
+        System.out.println("Total amount to be paid:"+overall_price);
+    }
+	}
